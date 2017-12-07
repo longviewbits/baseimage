@@ -25,8 +25,8 @@
       "remote_password": "{{ user `packer_remote_password` }}",
       "remote_type": "esx5",
       "format": "ova",
-      "ssh_username": "administrator@vsphere.local",
-      "ssh_password": "Chloe022!!2",
+      "ssh_username": "aaron",
+      "ssh_password": "doulos",
       "ssh_wait_timeout": "60m",
 
       "http_directory": "scripts/Linux/CentOS",
