@@ -16,7 +16,7 @@
       "guest_os_type": "rhel7-64",
       "iso_url": "http://172.20.252.249/rhel-server-7.4-x86_64-dvd.iso",
       "iso_checksum": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "sha256",
       "shutdown_command": "/sbin/shutdown -Ph now",
 
       "remote_host": "{{ user `packer_remote_host` }}",
