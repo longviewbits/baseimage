@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "PACKER_OS_FLAVOUR": "redhat",
+    "PACKER_BOX_NAME": "redhat-7.4-amd64"
+  },
+  "builders": [
+    {
+      "name": "{{ user `PACKER_BOX_NAME` }}",
+      "vm_name": "{{ user `PACKER_BOX_NAME` }}",
+      "vmdk_name": "{{ user `PACKER_BOX_NAME` }}-disk0",
+      "type": "vmware-iso",
+      "communicator": "ssh",
+      "ssh_pty": "true",
+      "headless": false,
+      "disk_size": 16384,
+      "guest_os_type": "rhel7-64",
+      "iso_url": "http://172.20.252.249/rhel-server-7.4-x86_64-dvd.iso",
+      "iso_checksum": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
+      "iso_checksum_type": "sha1",
+      "shutdown_command": "/sbin/shutdown -Ph now",
+
+      "remote_host": "{{ user `packer_remote_host` }}",
+      "remote_datastore": "{{ user `packer_remote_datastore` }}",
+      "remote_username": "{{ user `packer_remote_username` }}",
+      "remote_password": "{{ user `packer_remote_password` }}",
+      "remote_type": "esx5",
+      "format": "ova",
+      "ssh_username": "root",
+      "ssh_password": "doulos",
+      "ssh_wait_timeout": "60m",
+
+      "http_directory": "scripts/Linux/CentOS",
+      "boot_wait": "5s",
+      "vmx_data": {
+        "memsize": "2048",
+        "numvcpus": "2",
+        "ethernet0.networkName": "{{ user `packer_remote_network` }}",
+        "ethernet0.present": "TRUE",
+        "ethernet0.startConnected": "TRUE",
+        "ethernet0.virtualDev": "vmxnet3",
+        "ethernet0.addressType": "generated",
+        "ethernet0.generatedAddressOffset": "0",
+        "ethernet0.wakeOnPcktRcv": "FALSE"
+      },
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/redhat-kickstart-7.4.cfg<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/Linux/redhat/update.sh",
+        "scripts/Linux/redhat/cleanup.sh"
+      ]
+    }
+  ]
+}
