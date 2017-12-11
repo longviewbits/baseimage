@@ -16,7 +16,7 @@
       "guest_os_type": "rhel7-64",
       "iso_url": "http://mirrors.kernel.org/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
       "iso_checksum": "bba314624956961a2ea31dd460cd860a77911c1e0a56e4820a12b9c5dad363f5",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "sha256",
       "shutdown_command": "/sbin/shutdown -Ph now",
 
       "remote_host": "{{ user `packer_remote_host` }}",
@@ -28,9 +28,10 @@
       "ssh_username": "aaron",
       "ssh_password": "doulos",
       "ssh_wait_timeout": "60m",
+      "vnc_disable_password": true,
 
       "http_directory": "scripts/Linux/CentOS",
-      "boot_wait": "5s",
+      "boot_wait": "60s",
       "vmx_data": {
         "memsize": "2048",
         "numvcpus": "2",
